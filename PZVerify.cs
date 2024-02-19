@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Linq;
 using OldMusicBox.ePUAP.Client.Model.VerifySignedDocument;
+using Newtonsoft.Json;
 
 namespace PZBridge
 {
@@ -37,7 +38,7 @@ namespace PZBridge
 				Program.SendFault(faultModel);
 				return;
 			}
-			Program.SendFault("TODO");
+			Console.Write("{\"ok\": true, \"data\": " + JsonConvert.SerializeObject(response) + "}");
 		}
 	}
 }
