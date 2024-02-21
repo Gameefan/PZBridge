@@ -13,13 +13,13 @@ namespace PZBridge
 	{
 		public static void Execute(X509Certificate2 cert, string[] args)
 		{
-			if (args.Length < 2)
+			if (args.Length < 1)
 			{
-				Program.SendFault("verify: not enough arguments\nsyntax: verify <id> <info>\nstdin: <document> \\n EOF");
+				Program.SendFault("verify: not enough arguments\nsyntax: verify <env>\nstdin: <document> \\n EOF");
 				return;
 			}
 
-			TpSigning5Client client = new(args[0].StartsWith("int-") ? TpSigning5Client.INTEGRATION_URI : TpSigning5Client.PRODUCTION_URI, cert);
+			TpSigning5Client client = new(args[0] == "prod" ? TpSigning5Client.PRODUCTION_URI : TpSigning5Client.INTEGRATION_URI, cert);
 			
 			string document = "";
 			while (true) {
