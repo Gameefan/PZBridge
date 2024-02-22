@@ -20,8 +20,15 @@ namespace PZBridge
 			Console.Write("{\"ok\": false, \"fault\": {\"faultString\": \"" + faultString + "\", \"faultCode\": \"" + faultCode + "\", \"detail\": \"" + detail + "\"}}");
 		}
 
+		static void SetupConsole(int bufferSize)
+		{
+			Stream inStream = Console.OpenStandardInput(bufferSize);
+			Console.SetIn(new StreamReader(inStream, Console.InputEncoding, false, bufferSize));
+		}
+
 		static void Main(string[] args)
 		{
+			SetupConsole(1 * 1024 * 1024); // 1 MiB
 			if(args.Length < 3)
 			{
 				SendFault("not enough arguments\nsyntax: PZBridge <certfile> <certpwd> <command> [args...]");
