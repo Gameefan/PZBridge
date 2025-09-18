@@ -1,9 +1,7 @@
-﻿using OldMusicBox.ePUAP.Client.Model.AddDocumentToSigning;
-using OldMusicBox.ePUAP.Client.Model.Common;
+﻿using OldMusicBox.ePUAP.Client.Model.Common;
 using OldMusicBox.ePUAP.Client;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Linq;
 using OldMusicBox.ePUAP.Client.Model.VerifySignedDocument;
 using Newtonsoft.Json;
 
