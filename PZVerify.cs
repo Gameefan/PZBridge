@@ -19,13 +19,7 @@ namespace PZBridge
 
 			TpSigning5Client client = new(args[0] == "prod" ? TpSigning5Client.PRODUCTION_URI : TpSigning5Client.INTEGRATION_URI, cert);
 			
-			string document = "";
-			while (true) {
-				string? data = Console.ReadLine();
-				if (data == null || data == "EOF") break;
-				document += data;
-				document += "\r\n";
-			}
+			string document = Program.GetDocumentFromStandardInput();
 
 			byte[] documentBytes = Encoding.UTF8.GetBytes(document);
 

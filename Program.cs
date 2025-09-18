@@ -17,6 +17,27 @@ namespace PZBridge
 			Console.Write("{\"ok\": false, \"fault\": {\"faultString\": \"" + faultString + "\", \"faultCode\": \"" + faultCode + "\", \"detail\": \"" + detail + "\"}}");
 		}
 
+		public static string GetDocumentFromStandardInput()
+		{
+			string document = "";
+
+			while (true)
+			{
+				string? data = Console.ReadLine();
+
+				// FIXME: Maybe use a dynamic sentinel instead of the hard-coded "EOF"
+				if (data == null || data == "EOF") break;
+
+				if (data.StartsWith('='))
+					data = data[1..];
+
+				document += data;
+				document += "\r\n";
+			}
+
+			return document;
+		}
+
 		static void SetupConsole(int bufferSize)
 		{
 			Stream inStream = Console.OpenStandardInput(bufferSize);
@@ -26,7 +47,7 @@ namespace PZBridge
 		static void Main(string[] args)
 		{
 			SetupConsole(1 * 1024 * 1024); // 1 MiB
-			if(args.Length < 3)
+			if (args.Length < 3)
 			{
 				SendFault("not enough arguments\nsyntax: PZBridge <certfile> <certpwd> <command> [args...]");
 				return;
