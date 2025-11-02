@@ -16,6 +16,11 @@ namespace PZBridge
 				return;
 			}
 
+			if (args[0] == "stub") {
+				PZGetStub.Execute(args);
+				return;
+			}
+
 			TpSigning5Client client = new(args[0] == "prod" ? TpSigning5Client.PRODUCTION_URI : TpSigning5Client.INTEGRATION_URI, cert);
 			
 			FaultModel faultModel;

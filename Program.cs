@@ -38,6 +38,33 @@ namespace PZBridge
 			return document;
 		}
 
+		public static string ReplaceStubPlaceholders(string input)
+		{
+			Random rand = new Random();
+
+			// Generate random UTC date within the last 5 years
+			DateTime start = DateTime.UtcNow.AddYears(-5);
+			int range = (DateTime.UtcNow - start).Days;
+			DateTime randomDate = start.AddDays(rand.Next(range))
+									.AddHours(rand.Next(0, 24))
+									.AddMinutes(rand.Next(0, 60))
+									.AddSeconds(rand.Next(0, 60));
+
+			string[] names = { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank" };
+			string[] surnames = { "Smith", "Johnson", "Brown", "Taylor", "Anderson", "Clark" };
+
+			string randomName = names[rand.Next(names.Length)];
+			string randomSurname = surnames[rand.Next(surnames.Length)];
+
+			string result = input
+				.Replace("[date]", randomDate.ToString("u"))   // Universal sortable UTC format
+				.Replace("[name]", randomName)
+				.Replace("[surname]", randomSurname)
+				.Replace("[pesel]", rand.Next(111111, 999999).ToString() + rand.Next(11111, 99999).ToString());
+
+			return result;
+		}
+
 		static void SetupConsole(int bufferSize)
 		{
 			Stream inStream = Console.OpenStandardInput(bufferSize);
